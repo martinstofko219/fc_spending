@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function(String, double) addTransactionFunc;
-  final descriptionController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTransaction(this.addTransactionFunc);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final descriptionController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +53,12 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTransactionFunc(
+    widget.addTransactionFunc(
       descriptionController.text,
       double.parse(amountController.text),
     );
+
+    // close the bottom modal sheet
+    Navigator.of(context).pop();
   }
 }
