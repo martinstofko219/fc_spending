@@ -19,23 +19,37 @@ class NewTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: 'Description'),
               controller: descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+              onSubmitted: (_) => _submit(),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              decoration: InputDecoration(labelText: 'Amount'),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _submit(),
             ),
             FlatButton(
               child: Text('Add Transaction'),
-              onPressed: () => addTransactionFunc(
-                descriptionController.text,
-                double.parse(amountController.text),
-              ),
+              onPressed: _submit,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _submit() {
+    final description = descriptionController.text;
+    final amount = double.tryParse(amountController.text);
+
+    if (description.isEmpty || amount == null || amount <= 0) {
+      return;
+    }
+
+    addTransactionFunc(
+      descriptionController.text,
+      double.parse(amountController.text),
     );
   }
 }

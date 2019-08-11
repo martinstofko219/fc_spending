@@ -24,14 +24,16 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Spending Tracker'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Card(
-            child: Text('chart'),
-          ),
-          UserTransactions(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Card(
+              child: Text('chart'),
+            ),
+            UserTransactions(),
+          ],
+        ),
       ),
     );
   }
