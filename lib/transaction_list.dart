@@ -45,9 +45,9 @@ class TransactionList extends StatelessWidget {
                   child: Text(
                     '\$${t.amount.toStringAsFixed(2)}',
                     textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.subhead.apply(
+                    style: Theme.of(context).textTheme.subhead.copyWith(
                           color: Colors.red,
-                          fontWeightDelta: 2,
+                          fontWeight: FontWeight.w500,
                         ),
                   ),
                 ),
