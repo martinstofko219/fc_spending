@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Spending Tracker',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        accentColor: Colors.deepOrangeAccent,
       ),
       home: MyHomePage(),
     );
@@ -26,18 +27,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-      id: '1',
-      description: 'New Shoes',
-      amount: 149.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      description: 'Groceries',
-      amount: 84.65,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: '1',
+    //   description: 'New Shoes',
+    //   amount: 149.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: '2',
+    //   description: 'Groceries',
+    //   amount: 84.65,
+    //   date: DateTime.now(),
+    // )
   ];
 
   @override
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () => _openNewTransactionSheet(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
