@@ -18,7 +18,7 @@ class TransactionList extends StatelessWidget {
               children: <Widget>[
                 Container(
                   height: 300.0,
-                  margin: EdgeInsets.only(bottom: 16.0),
+                  margin: EdgeInsets.only(bottom: 8.0),
                   child: Image.asset(
                     'assets/images/no-records.png',
                     fit: BoxFit.cover,
