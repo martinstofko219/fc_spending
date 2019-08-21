@@ -38,12 +38,8 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(
-        vertical: 16.0,
-        // horizontal: 8.0,
-      ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: weeklyTransactions.map((d) {
