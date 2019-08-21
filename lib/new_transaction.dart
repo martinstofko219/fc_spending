@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
-  final Function(String, double, DateTime) addTransactionFunc;
+  final void Function(String, double, DateTime) onAddTransaction;
 
-  NewTransaction(this.addTransactionFunc);
+  NewTransaction(this.onAddTransaction);
 
   @override
   _NewTransactionState createState() => _NewTransactionState();
@@ -84,7 +84,7 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addTransactionFunc(_descriptionController.text,
+    widget.onAddTransaction(_descriptionController.text,
         double.parse(_amountController.text), transactionDate);
 
     // close the bottom modal sheet

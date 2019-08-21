@@ -30,20 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: '1',
-    //   description: 'New Shoes',
-    //   amount: 149.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: '2',
-    //   description: 'Groceries',
-    //   amount: 84.65,
-    //   date: DateTime.now(),
-    // )
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((t) {
@@ -73,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
@@ -89,6 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
         id: DateTime.now().toString());
 
     setState(() => _transactions.add(t));
+  }
+
+  void _removeTransaction(String id) {
+    if (id == null) {
+      return;
+    }
+
+    setState(() {
+      _transactions.removeWhere((t) => t.id == id);
+    });
   }
 
   void _openNewTransactionSheet(BuildContext context) {

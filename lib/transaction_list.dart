@@ -5,13 +5,13 @@ import 'models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String) onDeleteTransaction;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.onDeleteTransaction);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.symmetric(horizontal: 4.0),
       height: 450.0,
       child: (transactions.isEmpty)
           ? Column(
@@ -32,29 +32,50 @@ class TransactionList extends StatelessWidget {
               ],
             )
           : ListView.builder(
+              itemCount: transactions.length,
               itemBuilder: (ctx, index) {
                 final t = transactions[index];
 
                 return Card(
-                  child: ListTile(
-                    trailing: Text(
-                      '\$${t.amount.toStringAsFixed(2)}',
-                      textAlign: TextAlign.right,
-                      style: Theme.of(context).textTheme.body1.copyWith(
-                            color: Colors.red,
-                            fontWeight: FontWeight.w500,
-                          ),
+                  child: Dismissible(
+                    key: Key(t.id),
+                    background: Container(
+                      alignment: Alignment.centerRight,
+                      color: Theme.of(context).errorColor,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    title: Text(
-                      t.description,
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      if (direction != DismissDirection.endToStart) {
+                        return;
+                      }
+                      onDeleteTransaction(t.id);
+                    },
+                    child: ListTile(
+                      trailing: Text(
+                        '\$${t.amount.toStringAsFixed(2)}',
+                        textAlign: TextAlign.right,
+                        style: Theme.of(context).textTheme.body1.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                      title: Text(
+                        t.description,
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      subtitle:
+                          Text(DateFormat.yMMMMEEEEd().add_jm().format(t.date)),
                     ),
-                    subtitle:
-                        Text(DateFormat.yMMMMEEEEd().add_jm().format(t.date)),
                   ),
                 );
               },
-              itemCount: transactions.length,
             ),
     );
   }
