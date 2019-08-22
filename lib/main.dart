@@ -41,8 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mq = MediaQuery.of(context);
+    final isLandscape = mq.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Spending Tracker'),
       actions: <Widget>[
@@ -73,23 +73,23 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             if (!isLandscape)
-              _buildChart((MediaQuery.of(context).size.height -
+              _buildChart((mq.size.height -
                       appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
+                      mq.padding.top) *
                   0.225),
             if (!isLandscape)
-              _buildTransactions((MediaQuery.of(context).size.height -
+              _buildTransactions((mq.size.height -
                       appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
+                      mq.padding.top) *
                   0.775),
             if (isLandscape)
               _showChart
-                  ? _buildChart((MediaQuery.of(context).size.height -
+                  ? _buildChart((mq.size.height -
                       appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top))
-                  : _buildTransactions((MediaQuery.of(context).size.height -
+                      mq.padding.top))
+                  : _buildTransactions((mq.size.height -
                       appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top))
+                      mq.padding.top))
           ],
         ),
       ),
