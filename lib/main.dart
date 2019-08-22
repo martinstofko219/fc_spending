@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'chart.dart';
@@ -43,32 +46,54 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
     final isLandscape = mq.orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text('Spending Tracker'),
-      actions: <Widget>[
-        if (isLandscape)
-          (_showChart)
-              ? IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: _toggleChart,
-                )
-              : IconButton(
-                  icon: Icon(Icons.insert_chart),
-                  onPressed: _toggleChart,
-                ),
-      ],
-    );
-
-    return Scaffold(
-      appBar: appBar,
-      floatingActionButton: (!isLandscape || (isLandscape && !_showChart))
-          ? FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () => _openNewTransactionSheet(context),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: SingleChildScrollView(
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            leading: Row(
+              children: <Widget>[
+                if (isLandscape)
+                  _showChart
+                      ? GestureDetector(
+                          child: Text(
+                            'Transactions',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onTap: _toggleChart,
+                        )
+                      : GestureDetector(
+                          child: Text(
+                            'Chart',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onTap: _toggleChart,
+                        )
+              ],
+            ),
+            middle: Text('Spending Tracker'),
+            trailing: GestureDetector(
+              child: Icon(
+                CupertinoIcons.add,
+                color: Colors.green,
+              ),
+              onTap: () => _openNewTransactionSheet(context),
+            ),
+          )
+        : AppBar(
+            title: Text('Spending Tracker'),
+            actions: <Widget>[
+              if (isLandscape)
+                _showChart
+                    ? IconButton(
+                        icon: Icon(Icons.list),
+                        onPressed: _toggleChart,
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.insert_chart),
+                        onPressed: _toggleChart,
+                      ),
+            ],
+          );
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -94,6 +119,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: appBar,
+            child: pageBody,
+          )
+        : Scaffold(
+            appBar: appBar,
+            floatingActionButton: (!isLandscape || (isLandscape && !_showChart))
+                ? FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _openNewTransactionSheet(context),
+                  )
+                : null,
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            body: pageBody,
+          );
   }
 
   void _addTransaction(
