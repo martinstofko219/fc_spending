@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((t) {
@@ -40,42 +41,55 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Spending Tracker'),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _openNewTransactionSheet(context),
-        ),
+        if (isLandscape)
+          (_showChart)
+              ? IconButton(
+                  icon: Icon(Icons.list),
+                  onPressed: _toggleChart,
+                )
+              : IconButton(
+                  icon: Icon(Icons.insert_chart),
+                  onPressed: _toggleChart,
+                ),
       ],
     );
 
     return Scaffold(
       appBar: appBar,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _openNewTransactionSheet(context),
-      ),
+      floatingActionButton: (!isLandscape || (isLandscape && !_showChart))
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _openNewTransactionSheet(context),
+            )
+          : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              height: (MediaQuery.of(context).size.height -
+            if (!isLandscape)
+              _buildChart((MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.225,
-              child: Chart(_recentTransactions),
-            ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
+                  0.225),
+            if (!isLandscape)
+              _buildTransactions((MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.775,
-              child: TransactionList(_transactions, _removeTransaction),
-            ),
+                  0.775),
+            if (isLandscape)
+              _showChart
+                  ? _buildChart((MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top))
+                  : _buildTransactions((MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top))
           ],
         ),
       ),
@@ -109,5 +123,24 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return NewTransaction(_addTransaction);
         });
+  }
+
+  void _toggleChart() {
+    setState(() => _showChart = !_showChart);
+  }
+
+  Widget _buildChart(double height) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      height: height,
+      child: Chart(_recentTransactions),
+    );
+  }
+
+  Widget _buildTransactions(double height) {
+    return Container(
+      height: height,
+      child: TransactionList(_transactions, _removeTransaction),
+    );
   }
 }
