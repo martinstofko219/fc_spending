@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
         ? LayoutBuilder(
             builder: (context, constraints) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     height: constraints.maxHeight * 0.75,
