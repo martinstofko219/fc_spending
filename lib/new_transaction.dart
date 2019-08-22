@@ -17,11 +17,13 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 8.0,
-          horizontal: 16.0,
+        padding: EdgeInsets.only(
+          top: 8.0,
+          right: 16.0,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
+          left: 16.0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
