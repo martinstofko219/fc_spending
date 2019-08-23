@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'adaptive_raised_button.dart';
+
 class NewTransaction extends StatefulWidget {
   final void Function(String, double, DateTime) onAddTransaction;
 
@@ -63,23 +65,10 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             Container(
               margin: EdgeInsets.only(top: 24.0),
-              child: Platform.isIOS
-                  ? SizedBox(
-                      width: double.infinity,
-                      child: CupertinoButton(
-                        color: Theme.of(context).primaryColor,
-                        child: Text('Add Transaction'),
-                        onPressed: _submit,
-                      ),
-                    )
-                  : RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      textColor: Theme.of(context).textTheme.button.color,
-                      child: Text(
-                        'Add Transaction',
-                      ),
-                      onPressed: _submit,
-                    ),
+              child: AdaptiveRaisedButton(
+                caption: 'Add Transaction',
+                onSubmit: _submit,
+              ),
             ),
           ],
         ),

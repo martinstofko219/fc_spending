@@ -48,32 +48,24 @@ class _MyHomePageState extends State<MyHomePage> {
     final isLandscape = mq.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
+            backgroundColor: Theme.of(context).primaryColor,
             leading: Row(
               children: <Widget>[
                 if (isLandscape)
                   _showChart
                       ? GestureDetector(
-                          child: Text(
-                            'Transactions',
-                            style: TextStyle(color: Colors.green),
-                          ),
+                          child: Text('Transactions'),
                           onTap: _toggleChart,
                         )
                       : GestureDetector(
-                          child: Text(
-                            'Chart',
-                            style: TextStyle(color: Colors.green),
-                          ),
+                          child: Text('Chart'),
                           onTap: _toggleChart,
                         )
               ],
             ),
             middle: Text('Spending Tracker'),
             trailing: GestureDetector(
-              child: Icon(
-                CupertinoIcons.add,
-                color: Colors.green,
-              ),
+              child: Icon(CupertinoIcons.add),
               onTap: () => _openNewTransactionSheet(context),
             ),
           )
@@ -127,12 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         : Scaffold(
             appBar: appBar,
-            floatingActionButton: (!isLandscape || (isLandscape && !_showChart))
-                ? FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () => _openNewTransactionSheet(context),
-                  )
-                : null,
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _openNewTransactionSheet(context),
+            ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             body: pageBody,
           );
