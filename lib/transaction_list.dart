@@ -39,7 +39,9 @@ class TransactionList extends StatelessWidget {
               final t = transactions[index];
 
               return TransactionItem(
-                  transaction: t, onDeleteTransaction: onDeleteTransaction);
+                  key: ValueKey(t.id),
+                  transaction: t,
+                  onDeleteTransaction: onDeleteTransaction);
             },
           );
   }

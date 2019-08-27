@@ -17,7 +17,7 @@ class TransactionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Dismissible(
-        key: Key(transaction.id),
+        key: key,
         background: Container(
           alignment: Alignment.centerRight,
           color: Theme.of(context).errorColor,
