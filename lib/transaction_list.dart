@@ -7,7 +7,7 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final void Function(String) onDeleteTransaction;
 
-  TransactionList(this.transactions, this.onDeleteTransaction);
+  const TransactionList(this.transactions, this.onDeleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TransactionList extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     height: constraints.maxHeight * 0.75,
-                    margin: EdgeInsets.only(bottom: 8.0),
+                    margin: const EdgeInsets.only(bottom: 8.0),
                     child: Image.asset(
                       'assets/images/no-records.png',
                       fit: BoxFit.cover,
@@ -46,7 +46,7 @@ class TransactionList extends StatelessWidget {
                     color: Theme.of(context).errorColor,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: Icon(
+                      child: const Icon(
                         Icons.delete,
                         color: Colors.white,
                       ),

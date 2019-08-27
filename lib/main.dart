@@ -54,32 +54,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (isLandscape)
                   _showChart
                       ? GestureDetector(
-                          child: Text('Transactions'),
+                          child: const Text('Transactions'),
                           onTap: _toggleChart,
                         )
                       : GestureDetector(
-                          child: Text('Chart'),
+                          child: const Text('Chart'),
                           onTap: _toggleChart,
                         )
               ],
             ),
-            middle: Text('Spending Tracker'),
+            middle: const Text('Spending Tracker'),
             trailing: GestureDetector(
-              child: Icon(CupertinoIcons.add),
+              child: const Icon(CupertinoIcons.add),
               onTap: () => _openNewTransactionSheet(context),
             ),
           )
         : AppBar(
-            title: Text('Spending Tracker'),
+            title: const Text('Spending Tracker'),
             actions: <Widget>[
               if (isLandscape)
                 _showChart
                     ? IconButton(
-                        icon: Icon(Icons.list),
+                        icon: const Icon(Icons.list),
                         onPressed: _toggleChart,
                       )
                     : IconButton(
-                        icon: Icon(Icons.insert_chart),
+                        icon: const Icon(Icons.insert_chart),
                         onPressed: _toggleChart,
                       ),
             ],
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         : Scaffold(
             appBar: appBar,
             floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
               onPressed: () => _openNewTransactionSheet(context),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildChart(double height) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       height: height,
       child: Chart(_recentTransactions),
     );

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -45,7 +43,7 @@ class _NewTransactionState extends State<NewTransaction> {
               onSubmitted: (_) => _submit(),
             ),
             Container(
-              margin: EdgeInsets.only(top: 16.0),
+              margin: const EdgeInsets.only(top: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -57,14 +55,14 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   FlatButton(
                     textColor: Theme.of(context).accentColor,
-                    child: Text('Pick Date'),
+                    child: const Text('Pick Date'),
                     onPressed: _openDatePicker,
                   ),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 24.0),
+              margin: const EdgeInsets.only(top: 24.0),
               child: AdaptiveRaisedButton(
                 caption: 'Add Transaction',
                 onSubmit: _submit,
