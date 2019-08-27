@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _transactions = [];
   bool _showChart = false;
 
@@ -40,6 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
     return _transactions.where((t) {
       return t.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Add an observer for this class (needs to implement didChangeAppLifecycleState(AppLifecycleState) method).
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // Remove the observer.
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
