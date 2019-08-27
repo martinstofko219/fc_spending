@@ -46,71 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
     final isLandscape = mq.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            leading: Row(
-              children: <Widget>[
-                if (isLandscape)
-                  _showChart
-                      ? GestureDetector(
-                          child: const Text('Transactions'),
-                          onTap: _toggleChart,
-                        )
-                      : GestureDetector(
-                          child: const Text('Chart'),
-                          onTap: _toggleChart,
-                        )
-              ],
-            ),
-            middle: const Text('Spending Tracker'),
-            trailing: GestureDetector(
-              child: const Icon(CupertinoIcons.add),
-              onTap: () => _openNewTransactionSheet(context),
-            ),
-          )
-        : AppBar(
-            title: const Text('Spending Tracker'),
-            actions: <Widget>[
-              if (isLandscape)
-                _showChart
-                    ? IconButton(
-                        icon: const Icon(Icons.list),
-                        onPressed: _toggleChart,
-                      )
-                    : IconButton(
-                        icon: const Icon(Icons.insert_chart),
-                        onPressed: _toggleChart,
-                      ),
-            ],
-          );
-    final pageBody = SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            if (!isLandscape)
-              _buildChart((mq.size.height -
-                      appBar.preferredSize.height -
-                      mq.padding.top) *
-                  0.225),
-            if (!isLandscape)
-              _buildTransactions((mq.size.height -
-                      appBar.preferredSize.height -
-                      mq.padding.top) *
-                  0.775),
-            if (isLandscape)
-              _showChart
-                  ? _buildChart((mq.size.height -
-                      appBar.preferredSize.height -
-                      mq.padding.top))
-                  : _buildTransactions((mq.size.height -
-                      appBar.preferredSize.height -
-                      mq.padding.top))
-          ],
-        ),
-      ),
-    );
+    final PreferredSizeWidget appBar = _buildAppBar(isLandscape);
+    final pageBody = _buildAppBody(isLandscape, mq, appBar);
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
@@ -159,6 +96,78 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _toggleChart() {
     setState(() => _showChart = !_showChart);
+  }
+
+  PreferredSizeWidget _buildAppBar(bool isLandscape) {
+    return Platform.isIOS
+        ? CupertinoNavigationBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            leading: Row(
+              children: <Widget>[
+                if (isLandscape)
+                  _showChart
+                      ? GestureDetector(
+                          child: const Text('Transactions'),
+                          onTap: _toggleChart,
+                        )
+                      : GestureDetector(
+                          child: const Text('Chart'),
+                          onTap: _toggleChart,
+                        )
+              ],
+            ),
+            middle: const Text('Spending Tracker'),
+            trailing: GestureDetector(
+              child: const Icon(CupertinoIcons.add),
+              onTap: () => _openNewTransactionSheet(context),
+            ),
+          )
+        : AppBar(
+            title: const Text('Spending Tracker'),
+            actions: <Widget>[
+              if (isLandscape)
+                _showChart
+                    ? IconButton(
+                        icon: const Icon(Icons.list),
+                        onPressed: _toggleChart,
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.insert_chart),
+                        onPressed: _toggleChart,
+                      ),
+            ],
+          );
+  }
+
+  Widget _buildAppBody(
+      bool isLandscape, MediaQueryData mediaQuery, PreferredSizeWidget appBar) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            if (!isLandscape)
+              _buildChart((mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.225),
+            if (!isLandscape)
+              _buildTransactions((mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.775),
+            if (isLandscape)
+              _showChart
+                  ? _buildChart((mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top))
+                  : _buildTransactions((mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top))
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildChart(double height) {
